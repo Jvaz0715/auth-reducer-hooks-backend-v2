@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const User = require("../model/User");
+const dbErrorHelper = require("../lib/dbErrorHelper");
 
 async function createUser(req, res) {
    try{
@@ -21,7 +22,7 @@ async function createUser(req, res) {
 
    } catch(e) {
       res.status(500).json({
-         message: e,
+         message: dbErrorHelper(e),
       })
    }
 };
