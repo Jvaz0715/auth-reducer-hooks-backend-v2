@@ -1,23 +1,31 @@
-const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+const User = require("../model/User");
 
-const UserSchema = new mongoose.Schema({
-   username: {
-      type: String,
-      trim: true,
-      unique: true,
-      required: true,
-   },
-   email: {
-      type: String,
-      trim: true,
-      unique: true,
-      required: true,
-   },
-   password: {
-      type: String,
-      required: true,
-   },
+async function createUser(req, res) {
+   try{
+      let createdUser = new User({
+         email: req.body.email,
+         username: req.body.username,
+         password: req.body.password,
+      });
 
-});
+      let genSalt = await bcrypt.genSalt(12);
+      let hashedPassword = await bcrypt.hash(createdUser.password, genSalt);
 
-module.exports = mongoose.model("user", UserSchema);
+      createdUser.password = hashedPassword;
+      await createdUser.save();
+
+      res.json({
+         message: "user created",
+      })
+
+   } catch(e) {
+      res.status(500).json({
+         message: e,
+      })
+   }
+};
+
+module.exports = {
+   createUser,
+}
