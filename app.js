@@ -16,7 +16,7 @@ mongoose.connect(process.env.MONGO_DB, {
   .catch((e) => console.log(e));
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users/users');
+var usersRouter = require('./routes/users/usersRouter');
 
 var app = express();
 
