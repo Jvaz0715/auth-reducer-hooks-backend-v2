@@ -1,6 +1,10 @@
 function getUniqueErrorMessage(err) {
-   let message = err.message.match(/"(.*?)"/g);
-   return `$${message[0].replace(/["]+/g, "")} already exists`;
+   // let message = err.message.match(/"(.*?)"/g);
+   // return `$${message[0].replace(/["]+/g, "")} already exists`;
+   let message = err.keyValue;
+   let messageKey = Object.keys(message);
+   let messageValue = Object.values(message);
+   return `${messageKey[0]}: ${messageValue[0]} already exists!`;
 }
 
 function getErrorMessage(err) {
