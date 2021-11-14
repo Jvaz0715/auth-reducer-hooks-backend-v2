@@ -67,7 +67,7 @@ async function login(req, res) {
          message: dbErrorHelper(e),
       })
    }
-}
+};
 
 module.exports = {
    createUser,
