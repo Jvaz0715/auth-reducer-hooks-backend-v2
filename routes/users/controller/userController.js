@@ -3,6 +3,26 @@ const jwt = require("jsonwebtoken");
 const User = require("../model/User");
 const dbErrorHelper = require("../lib/dbErrorHelper");
 
+// for testing, create a get all users function
+async function getAllUsers(req, res) {
+   try {
+      let foundAllUsers = await User.find({});
+      res.json({message: "success", data: foundAllUsers})
+   } catch(e){
+      res.status(500).json({message: "error", error: e.message })
+   }
+};
+
+// for deleting users
+async function deleteUserById(req, res) {
+   try {
+      let deletedUser = await User.findByIdAndDelete(req.params.id);
+      res.json({message: "success", data: deletedUser })
+   } catch(e) {
+      res.status(500).json({ message: "error", error: e.message })
+   }
+};
+
 async function createUser(req, res) {
    try{
       let createdUser = new User({
@@ -71,5 +91,7 @@ async function login(req, res) {
 
 module.exports = {
    createUser,
-   login
+   login,
+   getAllUsers,
+   deleteUserById,
 }
