@@ -20,7 +20,12 @@ var usersRouter = require('./routes/users/usersRouter');
 
 var app = express();
 
-app.use(cors());
+let originURL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "DEPLOYED URL";
+
+app.use(cors({ origin: originURL, credentials: true}));
 
 app.use(logger('dev'));
 app.use(express.json());
