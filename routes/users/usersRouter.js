@@ -5,7 +5,7 @@ const {
   createUser,
   login,
   getAllUsers,
-  deleteUserById
+  deleteUserById,
 } = require("./controller/userController")
 
 /* GET users listing. */

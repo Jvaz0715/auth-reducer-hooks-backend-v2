@@ -89,6 +89,22 @@ async function login(req, res) {
    }
 };
 
+async function addToFavorites(req, res) {
+   try {
+      let updatedUser = await User.findByIdAndUpdate(
+         {_id: req.params.id},
+         {$set: req.body.favorites},
+         { upsert: true, returnOriginal: false},
+      );
+
+      res.json({message: "success", data: updatedUser});
+   } catch(e) {
+      res.status(500).json({
+         message: dbErrorHelper(e),
+      })
+   }
+};
+
 module.exports = {
    createUser,
    login,
